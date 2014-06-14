@@ -26,37 +26,6 @@
 
 @implementation NSCalendar (CalendarAdditions)
 
-+ (NSCalendar *)gregorianCalendar
-{
-	return [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-}
-
-
-- (NSDate *)dateWithYear:(NSInteger)year month:(NSInteger)month day:(NSInteger)day
-{
-    NSDateComponents *components = [[NSDateComponents alloc] init];
-    [components setYear:year];
-    [components setMonth:month];
-    [components setDay:day];
-    [components setHour:12];
-    
-    return [self dateFromComponents:components];
-}
-
-
-- (NSDate *)dateForTomorrowRelativeToToday:(NSDate *)today
-{
-	// tomorrow is 1 day after today
-	
-	// create components for 1 day
-	NSDateComponents *tomorrowComponents = [[NSDateComponents alloc] init];
-	[tomorrowComponents setDay:1];
-	
-	// add the offset (1 day) to today
-	return [self dateByAddingComponents:tomorrowComponents toDate:today options:0];
-}
-
-
 - (NSDate *)dateForEndOfWeekWithDate:(NSDate *)date
 {
 	NSInteger daysRemainingThisWeek = [self daysRemainingInWeekWithDate:date];
@@ -202,37 +171,6 @@ NSComparisonResult CompareInteger(NSInteger lhs, NSInteger rhs)
 
 - (VTDNearTermDateRelation)nearTermRelationForDate:(NSDate *)date relativeToToday:(NSDate *)today
 {
-    VTDNearTermDateRelation relation = VTDNearTermDateRelationOutOfRange;
-    
-    if ([self isDate:date beforeYearMonthDay:today])
-    {
-        relation = VTDNearTermDateRelationOutOfRange;
-    }
-    else if ([self isDate:date equalToYearMonthDay:today])
-    {
-        relation = VTDNearTermDateRelationToday;
-    }
-    else if ([self isDate:date equalToYearMonthDay:[self dateForTomorrowRelativeToToday:today]])
-    {
-        if ([self isDate:today duringSameWeekAsDate:date])
-        {
-            relation = VTDNearTermDateRelationTomorrow;
-        }
-        else
-        {
-            relation = VTDNearTermDateRelationNextWeek;
-        }
-    }
-    else if ([self isDate:date duringSameWeekAsDate:today])
-    {
-        relation = VTDNearTermDateRelationLaterThisWeek;
-    }
-    else if ([self isDate:date duringWeekAfterDate:today])
-    {
-        relation = VTDNearTermDateRelationNextWeek;
-    }
-    
-    return relation;
 }
 
 @end

@@ -23,8 +23,6 @@
 
 #import "VTDListInteractor.h"
 #import "VTDListDataManager.h"
-#import "VTDClock.h"
-#import "VTDTodoItem.h"
 #import "VTDUpcomingItem.h"
 #import "NSArray+HOM.h"
 #import "NSCalendar+CalendarAdditions.h"
